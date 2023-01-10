@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +35,19 @@ class CartItemRow extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
       ),
       direction: DismissDirection.endToStart,
+      confirmDismiss: (directions){
+        return showDialog(context: context, builder: (builder)=>
+          AlertDialog(title: Text('Are you sure?'),content: Text('Do you want to remove the item from cart?'),
+            actions: [
+            TextButton(onPressed: (){
+              Navigator.of(context).pop(false);
+            }, child: Text('No')),
+            TextButton(onPressed: (){
+              Navigator.of(context).pop(true);
+            }, child: Text('Yes'))
+          ])
+        );
+      },
       onDismissed: (direction) {
         Provider.of<Cart>(context,listen: false).removeItem(productId);
       },
